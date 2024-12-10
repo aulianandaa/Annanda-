@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Registrasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Selamat Datang di Website Kami</h1>
+        <p>Tempat untuk menemukan informasi dan bermain!</p>
+    </section>
+
+    <section class="games">
+        <div class="game" id="clickGame">
+            <h3>Permainan Klik Kotak</h3>
+            <p>Klik kotak yang muncul di layar untuk mendapatkan skor!</p>
+            <button onclick="startClickGame()">Mulai Bermain</button>
+            <div id="gameArea" class="gameArea">
+                <!-- Kotak akan muncul di sini -->
+            </div>
+            <p id="gameResult"></p>
+        </div>
+    </section>
+
+    <script>
+        let gameInterval;
+        let score = 0;
+
+        function startClickGame() {
+            score = 0;
+            document.getElementById('gameResult').innerText = 'Skor: ' + score;
+            const gameArea = document.getElementById('gameArea');
+            gameArea.innerHTML = ''; // Reset area permainan
+            const timeLimit = 30; // Durasi permainan dalam detik
+            const endTime = Date.now() + timeLimit * 1000;
+
+            gameInterval = setInterval(function() {
+                if (Date.now() >= endTime) {
+                    clearInterval(gameInterval);
+                    document.getElementById('gameResult').innerText = 'Waktu Habis! Skor Akhir: ' + score;
+                    return;
+                }
+
+                // Membuat kotak acak
+                const box = document.createElement('div');
+                const size = Math.floor(Math.random() * 50) + 30; // Ukuran kotak acak antara 30-80px
+                box.style.width = size + 'px';
+                box.style.height = size + 'px';
+                box.style.position = 'absolute';
+                box.style.top = Math.random() * 300 + 'px';
+                box.style.left = Math.random() * 300 + 'px';
+                box.style.backgroundColor = '#007BFF';
+                box.style.cursor = 'pointer';
+                box.style.borderRadius = '10px';
+                box.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                box.addEventListener('click', () => {
+                    score++;
+                    document.getElementById('gameResult').innerText = 'Skor: ' + score;
+                    box.remove(); // Menghapus kotak yang diklik
+                });
+
+                gameArea.appendChild(box);
+
+                // Menghapus kotak setelah beberapa detik jika tidak diklik
+                setTimeout(() => {
+                    if (gameArea.contains(box)) {
+                        box.remove();
+                    }
+                }, 2000);
+            }, 1000); // Kotak muncul setiap detik
+        }
+    </script>
+</body>
+</html>

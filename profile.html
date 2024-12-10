@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="login.html" id="logoutButton">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="profile-container">
+        <h2>Profil Pengguna</h2>
+        <div class="profile-details">
+            <p><strong>Username:</strong> JohnDoe</p>
+            <p><strong>Email:</strong> johndoe@example.com</p>
+        </div>
+    </section>
+
+    <script>
+        // Mengecek apakah pengguna sudah login menggunakan sessionStorage
+        const loggedIn = sessionStorage.getItem('loggedIn');
+
+        if (!loggedIn) {
+            // Jika belum login, arahkan ke halaman login
+            window.location.href = 'login.html';
+        }
+
+        // Menangani logout
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            sessionStorage.removeItem('loggedIn'); // Menghapus sesi login
+            window.location.href = 'login.html'; // Arahkan ke halaman login
+        });
+    </script>
+</body>
+</html>
